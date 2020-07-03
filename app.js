@@ -1,3 +1,4 @@
+const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -13,6 +14,138 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
+let teamMember = []
+        inquirer.prompt( [
+            {
+                type: "checkbox",
+                name: "role",
+                message: "Which type of team member would you like to add?",
+                choices: [
+                  "Manager",
+                  "Engineer", 
+                  "Intern", 
+                  "I don't want to add anymore team members.",],
+              },
+            {
+                type: "input",
+                name: "name",
+                message: "What is your Manager's name?"
+              },
+              {
+                type: "input",
+                name: "id",
+                message: "What is your Manager's id?"
+              },
+              {
+                type: "input",
+                name: "email",
+                message: "What is your Manager's email?"
+              },
+              {
+                type: "input",
+                name: "officeNumber",
+                message: "What is your Manager's office number?"
+              },
+              {
+                type: "checkbox",
+                name: "role",
+                message: "Which type of team member would you like to add?",
+                choices: [
+                  "Manager",
+                  "Engineer", 
+                  "Intern", 
+                  "I don't want to add anymore team members.",],
+              },
+
+              
+
+
+              {
+                type: "input",
+                name: "name",
+                message: "What is your Engineer's name?"
+              },
+              {
+                type: "input",
+                name: "id",
+                message: "What is your Engineer's id?"
+              },
+              {
+                type: "input",
+                name: "email",
+                message: "What is your Engineer's email?"
+              },
+              {
+                type: "input",
+                name: "github",
+                message: "What is your Engineer's GitHub ID?"
+              },
+              {
+                type: "checkbox",
+                name: "role",
+                message: "Which type of team member would you like to add?",
+                choices: [
+                  "Manager",
+                  "Engineer", 
+                  "Intern", 
+                  "I don't want to add anymore team members.",],
+              },
+
+
+
+
+              
+              {
+                type: "input",
+                name: "name",
+                message: "What is your Intern's name?"
+              },
+              {
+                type: "input",
+                name: "id",
+                message: "What is your Intern's id?"
+              },
+              {
+                type: "input",
+                name: "email",
+                message: "What is your Intern's email?"
+              },
+              {
+                type: "input",
+                name: "school",
+                message: "What is your Intern's school?"
+              },
+              {
+                type: "checkbox",
+                name: "role",
+                message: "Which type of team member would you like to add?",
+                choices: [
+                  "Manager",
+                  "Engineer", 
+                  "Intern", 
+                  "I don't want to add anymore team members.",],
+              },
+        ])
+
+
+        .then(function(answers){
+            let employeeData = answers
+            if (answers.role === "Manager") {
+                createManager(answers)
+            }
+            else if (answers.role === "Engineer") {
+                createEngineer(answers)
+            }
+            else if (answers.role === "Intern") {
+                createIntern(answers)
+            }
+        })
+
+
+        
+    
+
+
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
