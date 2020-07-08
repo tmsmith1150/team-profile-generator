@@ -1,4 +1,4 @@
-const Employee = require("./lib/Employee");
+
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -12,55 +12,105 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 const render = require("./lib/htmlRenderer");
 
 
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-let teamMember = []
-        inquirer.prompt( [
-            {
-                type: "checkbox",
-                name: "role",
-                message: "Which type of team member would you like to add?",
-                choices: [
-                  "Manager",
-                  "Engineer", 
-                  "Intern", 
-                  "I don't want to add anymore team members.",],
-              },
+let teamMember = [];
+
+
+var loopCont = true;
+CreateEmployees();
+
+async function CreateEmployees() 
+{
+    while (loopCont) 
+    {
+        await inquirer.prompt( 
+            [
+                {
+                    type: "list",
+                    name: "role",
+                    message: "Which type of team member would you like to add?",
+                    choices: [
+                    "Manager",
+                    "Engineer", 
+                    "Intern", 
+                    "I don't want to add anymore team members."]
+                }
+            ]).then (answer =>
+                {
+                    EmployeePromptSwitch(answer);
+                }) 
+    };
+}   
+
+async function EmployeePromptSwitch(answer)
+{
+    console.log(answer.role);
+    if (answer.role === "Manager")
+    {
+        console.log(answer);
+        PromptManager();
+        
+    }
+    else if (answer.role === "Engineer")
+    {
+        console.log(answer);
+        PromptEngineer();
+        
+    }
+    else if (answer.role === "Intern")
+    {
+        console.log(answer);
+        
+        PromptIntern();
+        
+    }
+    else
+    {
+        console.log("break");
+        loopCont = false;
+        
+    }
+
+}
+
+
+
+async function PromptManager()
+{
+     await inquirer.prompt( 
+        [
             {
                 type: "input",
                 name: "name",
                 message: "What is your Manager's name?"
-              },
-              {
+            },
+            {
                 type: "input",
                 name: "id",
                 message: "What is your Manager's id?"
-              },
-              {
+            },
+            {
                 type: "input",
                 name: "email",
                 message: "What is your Manager's email?"
-              },
-              {
+            },
+            {
                 type: "input",
                 name: "officeNumber",
                 message: "What is your Manager's office number?"
-              },
-              {
-                type: "checkbox",
-                name: "role",
-                message: "Which type of team member would you like to add?",
-                choices: [
-                  "Manager",
-                  "Engineer", 
-                  "Intern", 
-                  "I don't want to add anymore team members.",],
-              },
+            },
+            
+        ]
+    )
+}
 
-              
-
-
-              {
+async function PromptEngineer()
+{
+    await inquirer.prompt( 
+        [
+            {
                 type: "input",
                 name: "name",
                 message: "What is your Engineer's name?"
@@ -80,22 +130,16 @@ let teamMember = []
                 name: "github",
                 message: "What is your Engineer's GitHub ID?"
               },
-              {
-                type: "checkbox",
-                name: "role",
-                message: "Which type of team member would you like to add?",
-                choices: [
-                  "Manager",
-                  "Engineer", 
-                  "Intern", 
-                  "I don't want to add anymore team members.",],
-              },
-
-
-
-
               
-              {
+        ]
+    )
+}
+
+async function PromptIntern()
+{
+    await inquirer.prompt( 
+        [
+            {
                 type: "input",
                 name: "name",
                 message: "What is your Intern's name?"
@@ -113,20 +157,29 @@ let teamMember = []
               {
                 type: "input",
                 name: "school",
-                message: "What is your Intern's school?"
+                message: "What is your Intern's School name?"
               },
-              {
-                type: "checkbox",
-                name: "role",
-                message: "Which type of team member would you like to add?",
-                choices: [
-                  "Manager",
-                  "Engineer", 
-                  "Intern", 
-                  "I don't want to add anymore team members.",],
-              },
-        ])
+              
+        ]
+    )
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*     
 
         .then(function(answers){
             let employeeData = answers
@@ -141,7 +194,7 @@ let teamMember = []
             }
         })
 
-
+*/
         
     
 
