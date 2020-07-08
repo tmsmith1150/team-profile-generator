@@ -18,14 +18,13 @@ const render = require("./lib/htmlRenderer");
 let teamMember = [];
 
 
-var loopCont = true;
 CreateEmployees();
 
-async function CreateEmployees() 
+ function CreateEmployees() 
 {
-    while (loopCont) 
-    {
-        await inquirer.prompt( 
+    
+    
+         inquirer.prompt( 
             [
                 {
                     type: "list",
@@ -39,47 +38,30 @@ async function CreateEmployees()
                 }
             ]).then (answer =>
                 {
-                    EmployeePromptSwitch(answer);
-                }) 
-    };
-}   
+                     
+                    switch(answer.role) {
+                        case "Manager":
+                            console.log(answer);
+                            PromptManager();
+                        break;
+                    
+                        case "Engineer":
+                            PromptEngineer();
+                        break;
+                    
+                        case "Intern":
+                            PromptIntern();
+                        break;
+                    }
+                })
+    
+} 
 
-async function EmployeePromptSwitch(answer)
+
+
+ function PromptManager()
 {
-    console.log(answer.role);
-    if (answer.role === "Manager")
-    {
-        console.log(answer);
-        PromptManager();
-        
-    }
-    else if (answer.role === "Engineer")
-    {
-        console.log(answer);
-        PromptEngineer();
-        
-    }
-    else if (answer.role === "Intern")
-    {
-        console.log(answer);
-        
-        PromptIntern();
-        
-    }
-    else
-    {
-        console.log("break");
-        loopCont = false;
-        
-    }
-
-}
-
-
-
-async function PromptManager()
-{
-     await inquirer.prompt( 
+      inquirer.prompt( 
         [
             {
                 type: "input",
@@ -103,12 +85,17 @@ async function PromptManager()
             },
             
         ]
-    )
+    ).then(function(answers){
+        const manager = new Manager (answers.name, answers.id, answers.email, answers.officeNumber)
+        console.log(manager)
+        teamMember.push(manager)
+        CreateEmployees()
+    })
 }
 
-async function PromptEngineer()
+ function PromptEngineer()
 {
-    await inquirer.prompt( 
+     inquirer.prompt( 
         [
             {
                 type: "input",
@@ -132,12 +119,16 @@ async function PromptEngineer()
               },
               
         ]
-    )
+    ).then(function(answers){
+        const engineer = new Engineer (answers.name, answers.id, answers.email, answers.github)
+        teamMember.push(engineer)
+        CreateEmployees()
+    })
 }
 
-async function PromptIntern()
+ function PromptIntern()
 {
-    await inquirer.prompt( 
+     inquirer.prompt( 
         [
             {
                 type: "input",
@@ -161,7 +152,12 @@ async function PromptIntern()
               },
               
         ]
-    )
+    ).then(function(answers){
+        const intern = new Intern (answers.name, answers.id, answers.email, answers.school)
+        console.log(intern)
+        teamMember.push(intern)
+        CreateEmployees()
+    })
 }
 
 
